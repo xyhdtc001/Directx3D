@@ -10,7 +10,7 @@ namespace bx {
 		return _x;
 	}
 
-	void outputdebuginfo(char *szFormat, ...)
+    static void outputdebuginfo(char *szFormat, ...)
 	{
 		char temp[8192];
 		char* out = temp;
