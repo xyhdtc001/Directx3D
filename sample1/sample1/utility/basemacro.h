@@ -35,8 +35,8 @@ namespace bx {
 
 #define  D3DSAMPLE_CHECKPTR(ptr, returnvalue) if (ptr == NULL) return returnvalue;
 
-#define BX_MACRO_BLOCK_BEGIN 
-#define BX_MACRO_BLOCK_END 
+#define BX_MACRO_BLOCK_BEGIN for(;;) {
+#define BX_MACRO_BLOCK_END break; }
 
 #define  BX_IGNORE_C4127(_condition) bx::ignoreC4127(!!(_condition))
 
@@ -59,10 +59,11 @@ namespace bx {
 					}                                              \
 
 #define _DX_CHECK(_call) \
+				BX_MACRO_BLOCK_BEGIN \
 				HRESULT __hr__ = _call; \
 				_BX_CHECK(SUCCEEDED(__hr__), #_call " FAILED 0x%08x" DX_CHECK_EXTRA_F "\n" \
 					, (uint32_t)__hr__ \
 					DX_CHECK_EXTRA_ARGS \
 					); \
-
+				BX_MACRO_BLOCK_END
 #endif

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "SampleBase.h"
 
 typedef struct _st_vertex_drawsamle
 {
@@ -17,6 +18,7 @@ typedef struct _st_vertex_drawsamle
 
 
 class D3DDrawSample
+	:public CSampleBase
 {
 public:
 	D3DDrawSample(IDirect3DDevice9* pDevice);
@@ -24,11 +26,16 @@ public:
 
 	virtual bool setup();
 
+	virtual bool display(float timeDelta);
 
+
+	virtual bool cleanup();
 private:
 	IDirect3DVertexBuffer9 * m_vb;
 	IDirect3DIndexBuffer9*    m_ib;
 	IDirect3DDevice9* m_device;
+	ID3DXMesh* m_Teapot;
 
+	float m_rotationY;
 };
 

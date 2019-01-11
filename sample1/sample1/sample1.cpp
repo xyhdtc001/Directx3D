@@ -6,10 +6,11 @@
 #include <windows.h>
 #include <d3dx9.h>
 #include "d3dUtility.h"
-
+#include "D3DDrawSample.h"
 
 HINSTANCE hInst;                                // 当前实例
 
+CSampleBase *gCurSample = NULL;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -47,14 +48,16 @@ IDirect3DDevice9 * pdevice = NULL;
 
 bool Display(float timeDelta)
 {
-	if (pdevice)
+	if (gCurSample)
+	{
+		gCurSample->display(timeDelta);
+	}
+	else if (pdevice)
 	{
 		pdevice->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
 			0x00000000, 1.0f, 0);
 		pdevice->Present(0, 0, 0, 0); // 页面切换
 	}
-
-
 	return true;
 }
 
@@ -94,13 +97,18 @@ int main()
 	ShowWindow(hWnd, SW_SHOW);
 	UpdateWindow(hWnd);
 	
-	if (!d3d::InitD3D((HINSTANCE)hWnd,100,100,true, D3DDEVTYPE_HAL,&pdevice))
+	if (!d3d::InitD3D((HINSTANCE)hWnd,800,600,true, D3DDEVTYPE_HAL,&pdevice))
 	{
 		return 0;
 	}
+	gCurSample = new D3DDrawSample(pdevice);
+
+	gCurSample->setup();
 
 	d3d::EnterMsgLoop(&Display);
 
+	gCurSample->cleanup();
+	d3d::Delete<CSampleBase*>(gCurSample);
 	pdevice->Release();
     return 0;
 }

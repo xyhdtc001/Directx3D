@@ -39,6 +39,12 @@
     <ClInclude Include="utility\basemacro.h">
       <Filter>utility</Filter>
     </ClInclude>
+    <ClInclude Include="SampleBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DColorSample.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,6 +54,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="d3dUtility.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DColorSample.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="D3DDrawSample.cpp">
