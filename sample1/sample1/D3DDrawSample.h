@@ -26,14 +26,12 @@ public:
 
 	virtual bool setup();
 
-	virtual bool display(float timeDelta);
+	virtual bool display(float timeDelta) { return true; };
 
 
-	virtual bool cleanup();
+	virtual bool cleanup() { return true; };
 private:
-	IDirect3DVertexBuffer9 * m_vb;
-	IDirect3DIndexBuffer9*    m_ib;
-	IDirect3DDevice9* m_device;
+
 	ID3DXMesh* m_Teapot;
 
 	float m_rotationY;

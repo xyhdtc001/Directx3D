@@ -8,11 +8,8 @@ const int  Heigth = 600;
 //static const DWORD ST_VERTEX::FVF = D3DFVF_XYZ;
 
 D3DDrawSample::D3DDrawSample(IDirect3DDevice9* pDevice)
-	:CSampleBase(pDevice),
-	m_vb(NULL),
-	m_ib(NULL)
+	:CSampleBase(pDevice)
 {
-	m_device = pDevice;
 }
 
 
