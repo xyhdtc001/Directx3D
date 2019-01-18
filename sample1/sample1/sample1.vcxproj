@@ -149,6 +149,8 @@
   <ItemGroup>
     <ClInclude Include="D3DColorSample.h" />
     <ClInclude Include="D3DDrawSample.h" />
+    <ClInclude Include="D3DLightingSample.h" />
+    <ClInclude Include="D3DTextureSample.h" />
     <ClInclude Include="d3dUtility.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SampleBase.h" />
@@ -159,8 +161,11 @@
   <ItemGroup>
     <ClCompile Include="D3DColorSample.cpp" />
     <ClCompile Include="D3DDrawSample.cpp" />
+    <ClCompile Include="D3DLightingSample.cpp" />
+    <ClCompile Include="D3DTextureSample.cpp" />
     <ClCompile Include="d3dUtility.cpp" />
     <ClCompile Include="sample1.cpp" />
+    <ClCompile Include="SampleBase.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

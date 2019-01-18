@@ -1,4 +1,4 @@
-#pragma once
+	#pragma once
 #include <d3dx9.h>
 
 #ifndef _d3d_utility_h
@@ -39,6 +39,13 @@ namespace d3d
 		}
 	}
 
+	D3DMATERIAL9 InitMtrl(D3DXCOLOR a, D3DXCOLOR d,D3DXCOLOR s, D3DXCOLOR e, float p);
+
+	D3DLIGHT9 InitDirectionalLight(D3DXVECTOR3* direction, D3DXCOLOR* color);
+	D3DLIGHT9 InitPointLight(D3DXVECTOR3* position, D3DXCOLOR* color);
+	D3DLIGHT9 InitSpotLight(D3DXVECTOR3* position, D3DXVECTOR3* direction,D3DXCOLOR* color);
+
+
 	const D3DXCOLOR WHITE(D3DCOLOR_XRGB(255, 255, 255));
 	const D3DXCOLOR BLACK(D3DCOLOR_XRGB(0, 0, 0));
 	const D3DXCOLOR RED(D3DCOLOR_XRGB(255, 0, 0));
@@ -48,5 +55,15 @@ namespace d3d
 	const D3DXCOLOR CYAN(D3DCOLOR_XRGB(0, 255, 255));
 	const D3DXCOLOR MAGENTA(D3DCOLOR_XRGB(255, 0, 255));
 
+	const D3DXCOLOR redAmbient(1.0f, 0.0f, 0.0f, 1.0f);
+	const D3DXCOLOR blueDiffuse(0.0f, 0.0f, 1.0f, 1.0f);
+	const D3DXCOLOR whiteSpecular(1.0f, 1.0f, 1.0f, 1.0f);
+	
+
+	const D3DMATERIAL9 WHITE_MTRL = InitMtrl(WHITE, WHITE, WHITE, BLACK,8.0f);
+	const D3DMATERIAL9 RED_MTRL = InitMtrl(RED, RED, RED, BLACK, 8.0f);
+	const D3DMATERIAL9 GREEN_MTRL = InitMtrl(GREEN, GREEN, GREEN, BLACK,8.0f);
+	const D3DMATERIAL9 BLUE_MTRL = InitMtrl(BLUE, BLUE, BLUE, BLACK, 8.0f);
+	const D3DMATERIAL9 YELLOW_MTRL = InitMtrl(YELLOW, YELLOW, YELLOW,BLACK, 8.0f);
 }
 #endif

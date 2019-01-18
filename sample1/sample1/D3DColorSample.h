@@ -3,8 +3,15 @@
 
 typedef struct  _st_ColorVertex
 {
+	_st_ColorVertex(float x,float y,float z,D3DXCOLOR cr)
+	{
+		_x = x;
+		_y = y;
+		_z = z;
+		_color = cr;
+	}
 	float _x, _y, _z;
-	D3DXCOLOR _color;
+	D3DCOLOR _color;
 	static const DWORD FVF;
 }ColorVertex ,*LP_ColorVertex;
 
@@ -23,5 +30,7 @@ public:
 	virtual bool cleanup() ;
 
 
+protected:
+	D3DXMATRIX m_world;
 };
 
