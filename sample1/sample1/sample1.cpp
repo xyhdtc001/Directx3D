@@ -9,6 +9,7 @@
 #include "D3DDrawSample.h"
 #include "D3DColorSample.h"
 #include "D3DLightingSample.h"
+#include "D3DTextureSample.h"
 
 HINSTANCE hInst;                                // µ±Ç°ÊµÀı
 
@@ -104,7 +105,7 @@ int main()
 		return 0;
 	}
 	SetWindowPos(hWnd, NULL, 0,0,800,600,SWP_NOMOVE);
-	gCurSample = new D3DLightingSample(pdevice);
+	gCurSample = new D3DTextureSample(pdevice);
 
 	gCurSample->setup();
 
