@@ -154,7 +154,10 @@
   <ItemGroup>
     <ClInclude Include="D3DColorSample.h" />
     <ClInclude Include="D3DDrawSample.h" />
+    <ClInclude Include="D3DFontSample.h" />
     <ClInclude Include="D3DLightingSample.h" />
+    <ClInclude Include="D3DMeshSample.h" />
+    <ClInclude Include="D3DRenderMirrorSample.h" />
     <ClInclude Include="D3DTextureSample.h" />
     <ClInclude Include="d3dUtility.h" />
     <ClInclude Include="resource.h" />
@@ -166,7 +169,10 @@
   <ItemGroup>
     <ClCompile Include="D3DColorSample.cpp" />
     <ClCompile Include="D3DDrawSample.cpp" />
+    <ClCompile Include="D3DFontSample.cpp" />
     <ClCompile Include="D3DLightingSample.cpp" />
+    <ClCompile Include="D3DMeshSample.cpp" />
+    <ClCompile Include="D3DRenderMirrorSample.cpp" />
     <ClCompile Include="D3DTextureSample.cpp" />
     <ClCompile Include="d3dUtility.cpp" />
     <ClCompile Include="sample1.cpp" />

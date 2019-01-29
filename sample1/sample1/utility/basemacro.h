@@ -3,6 +3,7 @@
 #define _BASEMACRO_H
 #include <malloc.h>
 #include <string>
+#include <iostream>
 
 namespace bx {
 	inline constexpr bool ignoreC4127(bool _x)
@@ -22,10 +23,12 @@ namespace bx {
 			out = (char*)alloca(len + 1);
 			len = vsnprintf(out, len, szFormat, argList);
 			out[len] = '\0';
+			std::cout << out << std::endl;
 			OutputDebugStringA(out);
 		}
 		else
 		{
+			std::cout << "error,too long info...." << std::endl;
 			OutputDebugStringA("error,too long info....");
 		}
 		va_end(argList);

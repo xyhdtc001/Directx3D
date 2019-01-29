@@ -142,3 +142,8 @@ D3DLIGHT9 d3d::InitSpotLight(D3DXVECTOR3* position, D3DXVECTOR3* direction, D3DX
 	light.Position = *position;
 	return light;
 }
+
+float d3d::Lerp(float a, float b, float t)
+{
+	return a - (a*t) + (b*t);
+}

@@ -10,6 +10,9 @@
 #include "D3DColorSample.h"
 #include "D3DLightingSample.h"
 #include "D3DTextureSample.h"
+#include "D3DRenderMirrorSample.h"
+#include "D3DFontSample.h"
+#include "D3DMeshSample.h"
 
 HINSTANCE hInst;                                // µ±Ç°ÊµÀı
 
@@ -105,7 +108,7 @@ int main()
 		return 0;
 	}
 	SetWindowPos(hWnd, NULL, 0,0,800,600,SWP_NOMOVE);
-	gCurSample = new D3DTextureSample(pdevice);
+	gCurSample = new D3DMeshSample(pdevice);
 
 	gCurSample->setup();
 
