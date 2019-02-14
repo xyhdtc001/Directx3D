@@ -1,6 +1,8 @@
 #pragma once
 #include "SampleBase.h"
 
+
+class CD3DTerrain;
 class D3DTerrainSample
 	:public CSampleBase
 {
@@ -17,6 +19,8 @@ public:
 
 	virtual bool cleanup();
 
-
+private:
+	CD3DTerrain *TheTerrain;
+	CameraBase*  TheCamera;
 };
 

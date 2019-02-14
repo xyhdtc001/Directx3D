@@ -261,14 +261,14 @@ bool D3DMeshSample::setup()
 ID3DXFont *pFontMesh = NULL;
 bool D3DMeshSample::display(float timeDelta)
 {
-
+	base_camera(timeDelta);
 	D3DXMATRIX xRot;
 	D3DXMatrixRotationX(&xRot, D3DX_PI * 0.2f);
 
 	static float y = 0.0f;
 	D3DXMATRIX yRot;
 	D3DXMatrixRotationY(&yRot, y);
-	y += timeDelta;
+	//y += timeDelta;
 
 	if (y >= 6.28f)
 		y = 0.0f;

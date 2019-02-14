@@ -25,7 +25,7 @@
 #define _BASE_RENDER_FPSCOUNT(font,_l,_t,_r,_b,_color) if(!font)  {_BASE_FONT_CRATE_DEF(font) } \
 			char szStringFPSBuff[100] = {0};sprintf(szStringFPSBuff, ("fps:%.1f"), m_Basefps);RECT rtFps = { _l,_t,_r,_b };font->DrawTextA(NULL, szStringFPSBuff, strlen(szStringFPSBuff), &rtFps, DT_TOP | DT_LEFT, (DWORD)_color);
 
-
+class CameraBase;
 class CSampleBase
 {
 public:
@@ -41,6 +41,8 @@ public:
 
 	virtual void calc_FPS(float timeDelta);
 
+	virtual void base_camera(float timeDelta);
+
 protected:
 	IDirect3DDevice9 * m_device;
 	IDirect3DVertexBuffer9 * m_vb;
@@ -52,5 +54,7 @@ protected:
 	DWORD m_baseFrameCnt;
 	float m_baseTimeElapsed;
 	float m_Basefps;
+
+	CameraBase *m_CameraBase;
 };
 

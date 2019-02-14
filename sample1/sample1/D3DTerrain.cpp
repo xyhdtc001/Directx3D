@@ -4,6 +4,10 @@
 #include <assert.h>
 #include "d3dUtility.h"
 
+const DWORD CD3DTerrain::TerrainVertex::FVF = D3DFVF_XYZ | D3DFVF_TEX1;
+
+
+
 CD3DTerrain::CD3DTerrain(IDirect3DDevice9* device, std::string heightmapFileName, int numVertsPerRow, int numVertsPerCol, int cellSpacing, /* space between cells */ float heightScale)
 {
 	_device = device;
@@ -336,6 +340,157 @@ bool CD3DTerrain::genTexture(D3DXVECTOR3* directionToLight)
 	{
 		_BX_CHECK(true, "D3DXFilterTexture failed");
 		return false;
+	}
+
+	return true;
+}
+
+bool CD3DTerrain::computeVertices()
+{
+	HRESULT hr = 0;
+
+	hr = _device->CreateVertexBuffer(
+		_numVertices * sizeof(TerrainVertex),
+		D3DUSAGE_WRITEONLY,
+		TerrainVertex::FVF,
+		D3DPOOL_MANAGED,
+		&_vb,
+		0);
+
+	if (FAILED(hr))
+		return false;
+
+	// coordinates to start generating vertices at
+	int startX = -_width / 2;
+	int startZ = _depth / 2;
+
+	// coordinates to end generating vertices at
+	int endX = _width / 2;
+	int endZ = -_depth / 2;
+
+	// compute the increment size of the texture coordinates
+	// from one vertex to the next.
+	float uCoordIncrementSize = 1.0f / (float)_numCellsPerRow;
+	float vCoordIncrementSize = 1.0f / (float)_numCellsPerCol;
+
+	TerrainVertex* v = 0;
+	_vb->Lock(0, 0, (void**)&v, 0);
+
+	int i = 0;
+	for (int z = startZ; z >= endZ; z -= _cellSpacing)
+	{
+		int j = 0;
+		for (int x = startX; x <= endX; x += _cellSpacing)
+		{
+			// compute the correct index into the vertex buffer and heightmap
+			// based on where we are in the nested loop.
+			int index = i * _numVertsPerRow + j;
+
+			v[index] = TerrainVertex(
+				(float)x,
+				(float)_heightmap[index],
+				(float)z,
+				(float)j * uCoordIncrementSize,
+				(float)i * vCoordIncrementSize);
+
+			j++; // next column
+		}
+		i++; // next row
+	}
+
+	_vb->Unlock();
+
+	return true;
+}
+
+bool CD3DTerrain::computeIndices()
+{
+	HRESULT hr = 0;
+
+	hr = _device->CreateIndexBuffer(
+		_numTriangles * 3 * sizeof(WORD), // 3 indices per triangle
+		D3DUSAGE_WRITEONLY,
+		D3DFMT_INDEX16,
+		D3DPOOL_MANAGED,
+		&_ib,
+		0);
+
+	if (FAILED(hr))
+		return false;
+
+	WORD* indices = 0;
+	_ib->Lock(0, 0, (void**)&indices, 0);
+
+	// index to start of a group of 6 indices that describe the
+	// two triangles that make up a quad
+	int baseIndex = 0;
+
+	// loop through and compute the triangles of each quad
+	for (int i = 0; i < _numCellsPerCol; i++)
+	{
+		for (int j = 0; j < _numCellsPerRow; j++)
+		{
+			indices[baseIndex] = i   * _numVertsPerRow + j;
+			indices[baseIndex + 1] = i   * _numVertsPerRow + j + 1;
+			indices[baseIndex + 2] = (i + 1) * _numVertsPerRow + j;
+
+			indices[baseIndex + 3] = (i + 1) * _numVertsPerRow + j;
+			indices[baseIndex + 4] = i   * _numVertsPerRow + j + 1;
+			indices[baseIndex + 5] = (i + 1) * _numVertsPerRow + j + 1;
+
+			// next quad
+			baseIndex += 6;
+		}
+	}
+
+	_ib->Unlock();
+
+	return true;
+}
+
+bool CD3DTerrain::draw(D3DXMATRIX* world, bool drawTris)
+{
+	HRESULT hr = 0;
+
+	if (_device)
+	{
+		_device->SetTransform(D3DTS_WORLD, world);
+
+		_device->SetStreamSource(0, _vb, 0, sizeof(TerrainVertex));
+		_device->SetFVF(TerrainVertex::FVF);
+		_device->SetIndices(_ib);
+
+		_device->SetTexture(0, _tex);
+
+		// turn off lighting since we're lighting it ourselves
+		_device->SetRenderState(D3DRS_LIGHTING, false);
+
+		hr = _device->DrawIndexedPrimitive(
+			D3DPT_TRIANGLELIST,
+			0,
+			0,
+			_numVertices,
+			0,
+			_numTriangles);
+
+		_device->SetRenderState(D3DRS_LIGHTING, true);
+
+		if (drawTris)
+		{
+			_device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+			hr = _device->DrawIndexedPrimitive(
+				D3DPT_TRIANGLELIST,
+				0,
+				0,
+				_numVertices,
+				0,
+				_numTriangles);
+
+			_device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		}
+
+		if (FAILED(hr))
+			return false;
 	}
 
 	return true;

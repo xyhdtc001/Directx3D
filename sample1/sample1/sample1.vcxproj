@@ -152,12 +152,16 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraBase.h" />
     <ClInclude Include="D3DColorSample.h" />
     <ClInclude Include="D3DDrawSample.h" />
     <ClInclude Include="D3DFontSample.h" />
     <ClInclude Include="D3DLightingSample.h" />
     <ClInclude Include="D3DMeshSample.h" />
+    <ClInclude Include="D3DParticleSample.h" />
     <ClInclude Include="D3DRenderMirrorSample.h" />
+    <ClInclude Include="D3DTerrain.h" />
+    <ClInclude Include="D3DTerrainSample.h" />
     <ClInclude Include="D3DTextureSample.h" />
     <ClInclude Include="d3dUtility.h" />
     <ClInclude Include="resource.h" />
@@ -167,12 +171,16 @@
     <ClInclude Include="utility\basemacro.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="D3DColorSample.cpp" />
     <ClCompile Include="D3DDrawSample.cpp" />
     <ClCompile Include="D3DFontSample.cpp" />
     <ClCompile Include="D3DLightingSample.cpp" />
     <ClCompile Include="D3DMeshSample.cpp" />
+    <ClCompile Include="D3DParticleSample.cpp" />
     <ClCompile Include="D3DRenderMirrorSample.cpp" />
+    <ClCompile Include="D3DTerrain.cpp" />
+    <ClCompile Include="D3DTerrainSample.cpp" />
     <ClCompile Include="D3DTextureSample.cpp" />
     <ClCompile Include="d3dUtility.cpp" />
     <ClCompile Include="sample1.cpp" />

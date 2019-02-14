@@ -60,6 +60,18 @@
     <ClInclude Include="D3DMeshSample.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="D3DTerrain.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DTerrainSample.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DParticleSample.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -93,6 +105,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="D3DMeshSample.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DTerrain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DTerrainSample.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DParticleSample.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
