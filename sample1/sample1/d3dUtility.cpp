@@ -147,3 +147,58 @@ float d3d::Lerp(float a, float b, float t)
 {
 	return a - (a*t) + (b*t);
 }
+
+d3d::BoundingBox::BoundingBox()
+{
+	// infinite small 
+	_min.x = d3d::_INFINITY;
+	_min.y = d3d::_INFINITY;
+	_min.z = d3d::_INFINITY;
+
+	_max.x = -d3d::_INFINITY;
+	_max.y = -d3d::_INFINITY;
+	_max.z = -d3d::_INFINITY;
+}
+
+bool d3d::BoundingBox::isPointInside(D3DXVECTOR3& p)
+{
+	if (p.x >= _min.x && p.y >= _min.y && p.z >= _min.z &&
+		p.x <= _max.x && p.y <= _max.y && p.z <= _max.z)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+float d3d::GetRandomFloat(float lowBound, float highBound)
+{
+	if (lowBound >= highBound) // bad input
+		return lowBound;
+
+	// get random float in [0, 1] interval
+	float f = (rand() % 10000) * 0.0001f;
+
+	// return float in [lowBound, highBound] interval. 
+	return (f * (highBound - lowBound)) + lowBound;
+}
+
+d3d::BoundingSphere::BoundingSphere()
+{
+	_radius = 0.0f;
+}
+
+void d3d::GetRandomVector(
+	D3DXVECTOR3* out,
+	D3DXVECTOR3* min,
+	D3DXVECTOR3* max)
+{
+	out->x = GetRandomFloat(min->x, max->x);
+	out->y = GetRandomFloat(min->y, max->y);
+	out->z = GetRandomFloat(min->z, max->z);
+}
+
+
+const DWORD d3d::Vertex::FVF = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;

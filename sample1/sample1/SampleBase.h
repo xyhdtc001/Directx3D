@@ -43,6 +43,10 @@ public:
 
 	virtual void base_camera(float timeDelta);
 
+	virtual bool DrawBasicScene(float fscale = 1.0f);
+
+	virtual void releaseBaseScence();
+
 protected:
 	IDirect3DDevice9 * m_device;
 	IDirect3DVertexBuffer9 * m_vb;

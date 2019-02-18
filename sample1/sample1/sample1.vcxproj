@@ -164,6 +164,7 @@
     <ClInclude Include="D3DTerrainSample.h" />
     <ClInclude Include="D3DTextureSample.h" />
     <ClInclude Include="d3dUtility.h" />
+    <ClInclude Include="PSystem.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SampleBase.h" />
     <ClInclude Include="stdafx.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="D3DTerrainSample.cpp" />
     <ClCompile Include="D3DTextureSample.cpp" />
     <ClCompile Include="d3dUtility.cpp" />
+    <ClCompile Include="PSystem.cpp" />
     <ClCompile Include="sample1.cpp" />
     <ClCompile Include="SampleBase.cpp" />
     <ClCompile Include="stdafx.cpp">

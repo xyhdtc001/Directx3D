@@ -83,5 +83,60 @@ namespace d3d
 	const D3DMATERIAL9 YELLOW_MTRL = InitMtrl(YELLOW, YELLOW, YELLOW,BLACK, 8.0f);
 
 	float Lerp(float a, float b, float t);
+
+	const float _INFINITY = FLT_MAX;
+	const float EPSILON = 0.001f;
+
+	//
+	// Bounding Objects
+	//
+
+	struct BoundingBox
+	{
+		BoundingBox();
+
+		bool isPointInside(D3DXVECTOR3& p);
+
+		D3DXVECTOR3 _min;
+		D3DXVECTOR3 _max;
+	};
+
+	struct BoundingSphere
+	{
+		BoundingSphere();
+
+		D3DXVECTOR3 _center;
+		float       _radius;
+	};
+
+	static DWORD  FtoDw(float f)
+	{
+		return *((DWORD*)&f);
+	}
+
+	float GetRandomFloat(float lowBound, float highBound);
+
+	void GetRandomVector(D3DXVECTOR3* out,
+		D3DXVECTOR3* min,
+		D3DXVECTOR3* max);
+
+
+	struct Vertex
+	{
+		Vertex() {}
+		Vertex(float x, float y, float z,
+			float nx, float ny, float nz,
+			float u, float v)
+		{
+			_x = x;  _y = y;  _z = z;
+			_nx = nx; _ny = ny; _nz = nz;
+			_u = u;  _v = v;
+		}
+		float _x, _y, _z;
+		float _nx, _ny, _nz;
+		float _u, _v;
+
+		static const DWORD FVF;
+	};
 }
 #endif

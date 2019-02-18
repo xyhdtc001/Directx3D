@@ -1,24 +1,107 @@
 #include "stdafx.h"
 #include "D3DParticleSample.h"
-
-
-struct Particle
-{
-	D3DXVECTOR3 _position;
-	D3DCOLOR _color;
-	float _size;
-	static const DWORD FVF;
-};
-const DWORD Particle::FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE |
-D3DFVF_PSIZE;
+#include "CameraBase.h"
+#include <ctime>
 
 D3DParticleSample::D3DParticleSample(IDirect3DDevice9*pDevice)
 	:CSampleBase(pDevice)
 {
-
+	m_CameraBase = new CameraBase(CameraBase::AIRCRAFT);
 }
 
 D3DParticleSample::~D3DParticleSample()
 {
 
+}
+
+bool D3DParticleSample::setup()
+{
+	srand((unsigned int)time(0));
+
+	D3DXVECTOR3 origin(0.0f, 10.0f, 50.0f);
+	m_Exp = dynamic_cast<psys::PSystem*>(new psys::FireworkParticle(&origin, 6000));
+
+	m_Exp->init(m_device, _T("flare.bmp"));
+	DrawBasicScene();
+
+	D3DXMATRIX proj;
+	D3DXMatrixPerspectiveFovLH(
+		&proj,
+		D3DX_PI / 4.0f, // 45 - degree
+		(float)m_width / (float)m_heigth,
+		1.0f,
+		5000.0f);
+
+	m_device->SetTransform(D3DTS_PROJECTION, &proj);
+
+	return true;
+}
+
+bool D3DParticleSample::display(float timeDelta)
+{
+	if (!m_device)
+	{
+		return false;
+	}
+	IDirect3DDevice9* device = m_device;
+
+	if (::GetAsyncKeyState(VK_UP) & 0x8000f)
+		m_CameraBase->walk(4.0f * timeDelta);
+
+	if (::GetAsyncKeyState(VK_DOWN) & 0x8000f)
+		m_CameraBase->walk(-4.0f * timeDelta);
+
+	if (::GetAsyncKeyState(VK_LEFT) & 0x8000f)
+		m_CameraBase->yaw(-1.0f * timeDelta);
+
+	if (::GetAsyncKeyState(VK_RIGHT) & 0x8000f)
+		m_CameraBase->yaw(1.0f * timeDelta);
+
+	if (::GetAsyncKeyState('N') & 0x8000f)
+		m_CameraBase->strafe(-4.0f * timeDelta);
+
+	if (::GetAsyncKeyState('M') & 0x8000f)
+		m_CameraBase->strafe(4.0f * timeDelta);
+
+	if (::GetAsyncKeyState('W') & 0x8000f)
+		m_CameraBase->pitch(1.0f * timeDelta);
+
+	if (::GetAsyncKeyState('S') & 0x8000f)
+		m_CameraBase->pitch(-1.0f * timeDelta);
+
+	D3DXMATRIX V;
+	m_CameraBase->getViewMatrix(&V);
+	m_device->SetTransform(D3DTS_VIEW, &V);
+
+	m_Exp->updata(timeDelta);
+
+	if (m_Exp->isDead())
+		m_Exp->reset();
+
+	//
+	// Draw the scene:
+	//
+
+	device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0x00000000, 1.0f, 0);
+	device->BeginScene();
+
+	D3DXMATRIX I;
+	D3DXMatrixIdentity(&I);
+	device->SetTransform(D3DTS_WORLD, &I);
+
+	DrawBasicScene(1.0f);
+
+	device->SetTransform(D3DTS_WORLD, &I);
+	m_Exp->render();
+
+	device->EndScene();
+	device->Present(0, 0, 0, 0);
+	return true;
+}
+
+bool D3DParticleSample::cleanup()
+{
+	d3d::Delete<psys::PSystem*>(m_Exp);
+	releaseBaseScence();
+	return __super::cleanup();
 }
