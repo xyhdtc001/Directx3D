@@ -21,13 +21,21 @@ bool D3DParticleSample::setup()
 	D3DXVECTOR3 origin(0.0f, 10.0f, 50.0f);
 	m_Exp = dynamic_cast<psys::PSystem*>(new psys::FireworkParticle(&origin, 6000));
 
-	m_Exp->init(m_device, _T("flare.bmp"));
+	d3d::BoundingBox boudBox;
+	boudBox._min = D3DXVECTOR3(-10.0f, -10.0f, -10.0f);
+	boudBox._max = D3DXVECTOR3(10.0f, 10.0f, 10.0f);
+	m_Snow = dynamic_cast<psys::PSystem*>(new psys::SnowParticle(&boudBox, 6000));
+	m_Gun = dynamic_cast<psys::PSystem*>(new psys::GunParticle(m_CameraBase));;
+
+	m_Exp->init(m_device, _T("dx_res/flare.bmp"));
+	m_Snow->init(m_device,_T("dx_res/snowflake.dds"));
+	m_Gun->init(m_device, _T("dx_res/flare_alpha.dds"));
 	DrawBasicScene();
 
 	D3DXMATRIX proj;
 	D3DXMatrixPerspectiveFovLH(
 		&proj,
-		D3DX_PI / 4.0f, // 45 - degree
+		D3DX_PI / 2.0f, // 45 - degree
 		(float)m_width / (float)m_heigth,
 		1.0f,
 		5000.0f);
@@ -74,6 +82,9 @@ bool D3DParticleSample::display(float timeDelta)
 	m_device->SetTransform(D3DTS_VIEW, &V);
 
 	m_Exp->updata(timeDelta);
+	m_Snow->updata(timeDelta);
+	m_Gun->updata(timeDelta);
+
 
 	if (m_Exp->isDead())
 		m_Exp->reset();
@@ -93,6 +104,8 @@ bool D3DParticleSample::display(float timeDelta)
 
 	device->SetTransform(D3DTS_WORLD, &I);
 	m_Exp->render();
+	m_Snow->render();
+	m_Gun->render();
 
 	device->EndScene();
 	device->Present(0, 0, 0, 0);

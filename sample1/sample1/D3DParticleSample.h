@@ -20,5 +20,7 @@ public:
 
 protected:
 	psys::PSystem* m_Exp ;
+	psys::PSystem* m_Snow;
+	psys::PSystem* m_Gun;
 };
 

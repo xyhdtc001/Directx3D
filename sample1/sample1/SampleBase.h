@@ -60,5 +60,6 @@ protected:
 	float m_Basefps;
 
 	CameraBase *m_CameraBase;
+	bool m_bInitState;
 };
 

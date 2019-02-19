@@ -18,6 +18,7 @@ CSampleBase::CSampleBase(IDirect3DDevice9* pDevice)
 	m_baseTimeElapsed = 0;
 	m_Basefps = 0;
 	m_CameraBase = NULL;
+	m_bInitState = false;
 }
 
 
@@ -135,7 +136,7 @@ bool CSampleBase::DrawBasicScene(float fscale /*= 1.0f*/)
 
 		D3DXCreateTextureFromFile(
 			device,
-			_T("desert.bmp"),
+			_T("dx_res/desert.bmp"),
 			&tex);
 	}
 	else

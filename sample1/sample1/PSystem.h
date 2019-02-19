@@ -99,6 +99,8 @@ namespace psys {
 		virtual void updata(float timeDelta);
 	private:
 		CameraBase* _camera;
+		float m_nInternl;
+		float m_curDelta;
 	};
 
 }

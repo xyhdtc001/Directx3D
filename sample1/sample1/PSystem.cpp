@@ -347,10 +347,12 @@ void psys::FireworkParticle::postRender()
 psys::GunParticle::GunParticle(CameraBase * can)
 {
 	_camera = can;
-	_size = 0.8f;
+	_size = 0.2f;
 	_vbSize = 2048;
 	_vbOffset = 0;
 	_vbBatchSize = 512;
+	m_nInternl = 0.05;
+	m_curDelta = 0;
 }
 
 void psys::GunParticle::resetParticle(Attribute* pAttribute)
@@ -375,7 +377,7 @@ void psys::GunParticle::resetParticle(Attribute* pAttribute)
 	pAttribute->_color = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
 
 	pAttribute->_age = 0.0f;
-	pAttribute->_lifeTime = 1.0f; // lives for 1 seconds
+	pAttribute->_lifeTime = 0.5f; // lives for 1 seconds
 }
 
 void psys::GunParticle::updata(float timeDelta)
@@ -392,4 +394,10 @@ void psys::GunParticle::updata(float timeDelta)
 			i->_isAlive = false;
 	}
 	removeDeadParticle();
+	m_curDelta += timeDelta;
+	if (m_curDelta >0.1)
+	{
+		addParticle();
+		m_curDelta -= 0.1;
+	}
 }
